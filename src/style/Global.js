@@ -22,9 +22,10 @@ export default createGlobalStyle`
         --orange: #fb8500;
     }
 
-    body{
-        background-color: var(--white);
+    body,html{
+        background-color: #fffff0;
         color: var(--blue-black);
+        font-size: 16px;
     }
 
     body, input, button{

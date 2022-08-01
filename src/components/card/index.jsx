@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useWeatherContext } from "../../provider/weather";
 
 import { BiCurrentLocation, BiError } from "react-icons/bi";
 
-import { Container, Pulse, Header, Content } from "./styled";
+import { Container, Pulse, Header, Content, Info, P} from "./styled";
 import CardWeatherDay from "../cardWeatherDay";
+import ModalComponent from "../modal";
 
 const Card = () => {
-  const { weather, temp, setTemp } = useWeatherContext();
+  const [openModal, setOpenModal] = useState(false);
+
+  const { weather, temp, setTemp, alert } = useWeatherContext();
+  console.log(alert);
 
   const changeTemp = () => {
     if (temp === weather.data.current.temp_c) {
@@ -22,30 +26,51 @@ const Card = () => {
     <Container>
       <Header>
         <h2>
-          {weather.data?.location.name} <BiCurrentLocation />  <BiError/>
+          <span>
+            <BiCurrentLocation size={25} /> {weather.data?.location.name}
+          </span>
+          <span>
+            <BiError size={25} onClick={() => setOpenModal(true)}/>
+          </span>
         </h2>
 
         <Pulse>
           <span onClick={() => changeTemp()}>
-            {temp}º{temp === weather.data?.current.temp_f ? "F" : "C"}
+            {temp}º{temp === weather.data.current.temp_f ? "F" : "C"}
           </span>
         </Pulse>
 
-        <p>
-          {weather.data?.current.condition.text}{" "}
+        <Info>
+          <span>{weather.data.current.condition.text}</span>
           <img
-            src={weather.data?.current.condition.icon}
-            alt={weather.data?.current.condition.text}
+            src={weather.data.current.condition.icon}
+            alt={weather.data.current.condition.text}
           />
-        </p>
+        </Info>
       </Header>
       <Content>
-        <li>Vento <span>{weather.data?.current.wind_kph}k/h</span></li>
-        <li>Humidade <span>{weather.data?.current.humidity}%</span></li>
-        <li>UV <span>{weather.data?.current.uv}</span></li>
-        <li>Pressão <span>{weather.data?.current.pressure_in}p</span></li>
+        <li>
+          Ventos: <span>{weather.data.current.wind_kph}k/h</span>
+        </li>
+        <li>
+          Humidade: <span>{weather.data.current.humidity}%</span>
+        </li>
+        <li>
+          UV: <span>{weather.data.current.uv}</span>
+        </li>
+        <li>
+          Pressão: <span>{weather.data.current.pressure_in}p</span>
+        </li>
       </Content>
-      <CardWeatherDay/>
+      <P>Próximos dias</P>
+      <CardWeatherDay />
+      {openModal && (
+        <ModalComponent
+          modal={openModal}
+          setOpenModal={setOpenModal}
+          signal={alert}
+        />
+      )}
     </Container>
   );
 };

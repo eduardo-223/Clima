@@ -9,18 +9,27 @@ const SearchWeatherProvider = ({ children }) => {
   const [weather, setWeather] = useState([]);
   const [value, setValue] = useState("");
   const [temp, setTemp] = useState(0);
+  const [alert, setAlert] = useState([])
+  const [visibilit, setVisibilit] = useState(false)
 
   async function searchState(city) {
-    const responseSearch = await api.get(
-      `forecast.json?key=${keyApi}&q=${city}&days=10&aqi=no&alerts=yes&lang=pt`
-    );
-    setTemp(responseSearch.data.current.temp_c);
-    setWeather(responseSearch);
+    try{
+      const responseSearch = await api.get(
+        `forecast.json?key=${keyApi}&q=${city}&days=10&aqi=no&alerts=yes&lang=pt`
+      );
+      setTemp(responseSearch.data.current.temp_c);
+      setWeather(responseSearch);
+      setVisibilit(true)
+      setAlert(responseSearch.data.alerts.alert)
+    }
+    catch{
+      console.log("err")
+    }
   }
 
   return (
     <WeatherContext.Provider
-      value={{ searchState, weather, value, setValue, temp, setTemp }}
+      value={{ searchState, weather, value, setValue, temp, setTemp, alert, visibilit }}
     >
       {children}
     </WeatherContext.Provider>

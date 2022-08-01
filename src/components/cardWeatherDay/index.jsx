@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container } from "./styled";
+import { Container, Li } from "./styled";
 
 import { useWeatherContext } from "../../provider/weather";
 
@@ -8,20 +8,24 @@ const CardWeatherDay = () => {
   const { weather } = useWeatherContext();
   const days = weather.data?.forecast.forecastday || [];
 
-console.log(days)
   return (
     <Container>
       <ul>
         {days.map((day, index) => {
           return (
-            <li key={index}>
-              <img src={day.day.condition?.icon} alt={day.day.condition?.text} />
-              <p>{day.day.condition?.text}</p>
+            <Li key={index}>
+              <div>
+                <p>{day.day.condition?.text}</p>
+                <img
+                  src={day.day.condition?.icon}
+                  alt={day.day.condition?.text}
+                />
+              </div>
               <p>{day.date}</p>
-              <p>Lua {day.astro.moon_phase}</p>
-              <span>Max {day?.day.maxtemp_c}º</span>
-              <span>Min {day?.day.mintemp_c}º</span>
-            </li>
+              <p><span>Lua: </span>{day.astro.moon_phase}</p>
+              <p><span>Max: </span>{day?.day.maxtemp_c}º</p>
+              <p><span>Min: </span>{day?.day.mintemp_c}º</p>
+            </Li>
           );
         })}
       </ul>
