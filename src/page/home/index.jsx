@@ -9,11 +9,11 @@ import { Button } from "@mui/material";
 import Card from "../../components/card";
 
 const Home = () => {
-  const { searchState, value, setValue, weather, visibilit } =
+  const { searchState, value, setValue, weather, visibilit, number } =
     useWeatherContext();
 
   return (
-    <Container>
+    <Container number={number}>
       <h1>Bem vindo ao ToClima!</h1>
       <Content>
         <Search>
