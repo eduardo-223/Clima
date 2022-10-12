@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import photo1 from "../../assets/img/paisagem1.jpg";
 import photo2 from "../../assets/img/paisagem2.jpg";
@@ -20,6 +20,15 @@ import photo17 from "../../assets/img/paisagem17.jpg";
 import photo18 from "../../assets/img/paisagem18.jpg";
 import photo19 from "../../assets/img/paisagem19.jpg";
 import photo20 from "../../assets/img/paisagem20.jpg";
+
+const opacity = keyframes`
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+`
 
 const background = [
   photo1,
@@ -66,6 +75,7 @@ export const Container = styled.div`
   backdrop-filter: blur(50px);
   width:100%;
   height: 100%;
+  animation: ${opacity} 600ms ease-in-out;
 `;
 
 export const Content = styled.main`
