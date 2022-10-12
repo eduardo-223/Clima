@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, useState, useContext } from "react";
 
 import api from "../../services/api/api";
@@ -12,7 +13,7 @@ const SearchWeatherProvider = ({ children }) => {
   const [alert, setAlert] = useState([]);
   const [visibilit, setVisibilit] = useState(false);
   const [number, setNumber] = useState(0);
-
+  
   async function searchState(city) {
     try {
       const responseSearch = await api.get(
@@ -22,15 +23,17 @@ const SearchWeatherProvider = ({ children }) => {
       setWeather(responseSearch);
       setVisibilit(true);
       setAlert(responseSearch.data.alerts.alert);
-      if (number !== 20) {
+      if (number < 19) {
         setNumber(number + 1);
       } else {
         setNumber(0);
       }
     } catch {
-      console.log("err");
+      setNumber(number + 1);
+      
     }
   }
+
 
   return (
     <WeatherContext.Provider
@@ -43,7 +46,7 @@ const SearchWeatherProvider = ({ children }) => {
         setTemp,
         alert,
         visibilit,
-        number
+        number,
       }}
     >
       {children}

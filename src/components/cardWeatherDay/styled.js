@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: auto;
   overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+}
 
   ul {
     margin-left: 300px;
@@ -22,6 +25,7 @@ export const Li = styled.li`
   background-color: #9bddff;
   border-radius: 4px;
   box-shadow: 0px 5px 3px 0px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(50px);
 
   p{
     span{
